@@ -1,3 +1,4 @@
+Математический образовательный блог
 ![image](https://github.com/user-attachments/assets/440dd6c8-f3ce-476e-8e9d-ecb1636604cf)
 ![image](https://github.com/user-attachments/assets/51f3db6e-d84c-4fc6-b6f0-6c253961e0b7)
 ![image](https://github.com/user-attachments/assets/e7d524d8-c968-41f4-a4c1-90f19321d76e)
