@@ -1,0 +1,33 @@
+{% extends 'tasks/base.html' %}
+{% load static %}
+
+{% block content %}
+<article>
+        <div class="article">
+            <div class="article__title">{{ home }}</div>
+            <div class="article__mainText">
+            <span>Добро пожаловать на gauss.net!</span><br>
+            Здесь вы сможете найти необходимые для ЕГЭ материалы по подготовке.<br>
+            Я - любитель математики без педадогического образования, который в свободное время публикует решения заданий с объяснениями или же снимает решения этих задач вместе с  теоретическим материалом<br>
+            Желаю вам успешного времяпрепровождения на сайте!
+            </div>
+            <div class="article__category">
+                <span>Выберите категорию:</span>
+                <div class="article__category__grid">
+                    <a href = "{% url 'options' %}" class="article__category__block">
+                    <span>{{ options }}</span>
+                    <img src="{% static 'tasks/images/category__options.png '%}" alt="{{ options }}" class = "article__category__image">
+                    </a>
+                    <a href = "{% url 'tasks' %}" class="article__category__block">
+                    <span>{{ tasks }}</span>
+                    <img src="{% static 'tasks/images/category__questions.png '%}" alt="{{ tasks }}" class = "article__category__image">
+                    </a>
+                    <a href = "{% url 'themes' %}" class="article__category__block">
+                    <span>{{ theory }}</span>
+                    <img src="{% static 'tasks/images/category__theory.png '%}" alt="{{ theory }}" class = "article__category__image">
+                    </a>
+                </div>
+            </div>
+            </div>
+</article>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'tasks/base.html' %}
+{% load static %}
+
+{% block content %}
+<article>
+<div class="article">
+<div class="article__title">Задача №{{title_task}}</div>
+
+    {% autoescape off %}
+    <div class="task_page_block">
+        <span class = "task_page_block_title">Вопрос задачи</span>
+        <div class = "task_page_block_content">
+        {{post.condition|linebreaks}} <br>
+             {% if post.photo_condition %}
+        <img src="{{ post.photo_condition.url }}" alt="" width="200px" height="200px" class = "task_page_block_img">
+            <br>
+             {% endif %}
+                    </div>
+            <div>Тема: <b>{{ theme }}</b></div>
+                        <br>
+        <span class = "task_page_block_title">Решение задачи</span>
+        {% if post.photo_before %}
+            <img src="{{ post.photo_before.url }}" alt="" width="400px" height="400px" class = "task_page_block_img">
+            <br>
+        {% endif %}
+        <div class = "task_page_block_content">{{post.solution|linebreaks}}</div>
+            {% if post.photo_after %}
+        <br>
+        <img src="{{ post.photo_after.url }}" alt="" width="400px" height="400px" class = "task_page_block_img">
+             {% endif %}
+        <span class = "task_page_block_answer">Ответ:
+            <span>
+                {{post.answer}}
+            </span>
+        </span>
+                           <div class="article__task__video">
+                        {% if post.ytb %}
+                            Разбор на ютубе: <a href="{{ post.ytb }}"><img src="{% static 'tasks/images/youtube__logo.png' %}" alt="youtube"></a>
+                        {% else %}
+                            Разбор на ютубе: <span>отсутствует</span>
+                        {% endif %}
+                                </div>
+    </div>
+
+
+
+    {% if request.user.is_authenticated %}
+
+<div class="comment-form">
+<form action = '' method="post">
+{% csrf_token %}
+<div class="form-error">{{ form.non_field_errors }}</div>
+    <span>Ваш комментарий:</span><br>
+{% for f in form %}
+{{ f }}
+<div class="form-error">{{ f.errors }}</div>
+{% endfor %}
+<input type="hidden" value="{{ request.user.id }}" name="user" />
+<input type='hidden' value="{{ title_task }}" name="post"/>
+
+<button type="submit" class="form-btn-comment">Добавить</button>
+</form>
+</div>
+
+    {% else %}
+
+    <div class="comment-not-auth">
+    <span>Только авторизованные пользователи могут оставлять комментарии.</span><br>
+    <a href="{% url 'login' %}">Войдите в систему</a>
+        </div>
+
+    {% endif %}
+    <br><br>
+    <div class="comments">
+        {% for i in comments|slice:"::-1" %}
+            <div class="comment-block">
+            {% if i.user.is_superuser %}
+                        <span class = "comment-block-name">{{ i.user }} | <span id="user_admin">админ</span></span>
+                {% elif i.user.is_staff %}
+                        <span class = "comment-block-name">{{ i.user }} | <span id="user_moderator">модератор</span></span>
+                {% else %}
+                        <span class = "comment-block-name">{{ i.user }} | <span id="user_user">пользователь</span></span>
+            {% endif %}
+                <br>
+            <span class = "comment-block-data">Оставлен <span>{{ i.created }}</span></span><br>
+            {% if i.created != i.updated %}
+                <span id = "edited">Отредактировано</span>
+            {% endif %}
+            <div>{{ i.text|linebreaks }}</div>
+             </div>
+        {% endfor %}
+    </div>
+    {% endautoescape %}
+
+</div>
+</article>
+{% endblock %}

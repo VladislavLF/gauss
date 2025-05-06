@@ -1,0 +1,117 @@
+{% extends 'tasks/base.html' %}
+{% load static %}
+
+{% block content %}
+<article>
+<div class="article">
+<div class="article__title">{{ title }}</div>
+<div class="article__task__grid">
+    <div class="option_part">
+        Часть 1
+    </div>
+    {% for key, value in tasks.items %}
+    {% autoescape off %}
+                    {% if key <= 11 %}
+    <a href="{{ value.get_absolute_url }}" class="task_page_option">перейти к заданию</a>
+                    <div class="article__option__block__number_task">
+                        <span>Задание {{ key }}</span>
+                    </div>
+                <div class="article__task__block">
+
+                   <div class="article__option__block__question" >
+                   <div class="article__task__block__title">
+                       <span>вопрос задачи</span>
+                   </div>
+                        <div>{{ value.condition|linebreaks }}
+                            {% if value.photo_condition %}
+                                <br>
+                                <img src="{{ value.photo_condition.url }}" alt="" width="200px" height="200px">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div style = "display: none;">{{ value.answer }}</div>
+                    <div class="article__task__block__input">
+                        <div class="article__option__block__form">
+                            <input class="text_answer" type="text" placeholder="Ваш ответ">
+                            <button class="btn_answer" onclick = "clicked_button_option(this);">Проверить</button>
+                        </div>
+                        <div class = "status_answer_option"></div>
+                    </div>
+
+                </div>
+                    {% endif %}
+
+    {% if key > 11 %}
+    {% if key == 12 %}
+        <span>Ваш прогресс:</span>
+          <progress max="11" value="0" id="progress-bar">
+          </progress>
+        <button type="submit" onclick = "clicked_button_option_result(this);" id="option_result_btn" style="display: none;" class="form-btn">Показать результаты</button>
+        <div class="option_result" style="display: none;">
+        Результаты по первой части (Задания 1-11): <span id = "result">-</span>
+    </div>
+    <div class="option_part">
+        Часть 2
+    </div>
+    {% endif %}
+    <a href="{{ value.get_absolute_url }}" class="task_page_option">перейти к заданию</a>
+                    <div class="article__option__block__number_task">
+                        <span>Задание {{ key }}</span>
+                    </div>
+               <div class="article__task__block">
+                   <div class="accordion" onclick = "close_panel(this)">
+                       <div class="article__option__block__question" >
+                       <div class="article__task__block__title">
+                           <span>вопрос задачи</span>
+                       </div>
+                            <div>{{value.condition|linebreaks}}
+                            {% if value.photo_condition %}
+                                <br>
+                                <img src="{{ value.photo_condition.url }}" alt="" width="200px" height="200px">
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="article__option__block__solution">
+                           <div class="article__task__block__solution__title">
+                               <span>решение задачи</span>
+                           </div>
+                            {% if value.photo_before %}
+                                <img src="{{ value.photo_before.url }}" alt="" width="400px" height="400px">
+                                <br>
+                            {% endif %}
+                                <div>{{value.solution|linebreaks}}</div>
+                            {% if value.photo_after %}
+                            <br>
+                            <img src="{{ value.photo_after.url }}" alt="" width="400px" height="400px">
+                            {% endif %}
+                            <div class="article__options__video">
+                        {% if value.ytb %}
+                            Разбор на ютубе: <a href="{{ value.ytb }}"><img src="{% static 'tasks/images/youtube__logo.png' %}" alt="youtube"></a>
+                        {% else %}
+                            Разбор на ютубе: <span>отсутствует</span>
+                        {% endif %}
+                                </div>
+                            <div class="article__task__block__answer">
+                                <span class="answer__title">Ответ:</span>
+
+                                <span>{{value.answer|linebreaks}}</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                   {% endif %}
+    {% endautoescape %}
+    {% endfor %}
+
+    <div class="option_result">
+        Результаты решения второй части (Задания 12-18) оцениваются Вами
+    </div>
+
+</div>
+</div>
+</article>
+<script src = "{% static 'tasks/scripts/close_window.js' %}"></script>
+{% endblock %}

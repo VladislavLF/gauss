@@ -1,0 +1,97 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+         <title>{{title}}</title>
+         <link type="text/css" href="{% static 'tasks/styles/styles.css' %}" rel="stylesheet" />
+         <link type="text/css" href="{% static 'tasks/styles/media.css' %}" rel="stylesheet" />
+         <link rel="shortcut icon" href="{% static 'tasks/images/logo.png'%}" type="image/x-icon" />
+         <link rel="preconnect" href="https://fonts.googleapis.com">
+         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+         <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+         </script>
+         <script src = "{% static 'tasks/scripts/script.js' %}"></script>
+</head>
+<body>
+
+
+{% block header %}
+    <header>
+        <div class="header">
+            <a href = "{% url 'home' %}" class="header__logo">
+                <img src="{% static 'tasks/images/logo.png' %}" alt="logo">
+            </a>
+            <a href = "{% url 'home' %}" class="header__title">
+            <p>gauss.net</p>
+            <br>
+            <span>
+            математический образовательный блог
+            <br>
+            для подготовки к ЕГЭ по профильной математике
+            </span>
+            </a>
+            <div class="header-auth">
+                {% if request.user.is_authenticated %}
+                <span>{{user.username}}</span> | <a href="{% url 'logout' %}">Выйти</a>
+                {% else %}
+                <a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+
+{% block navigation %}
+    <nav>
+        <div class="nav">
+            <div class="nav__container">
+                <a href="{% url 'options' %}">Варианты ЕГЭ</a>
+                <a href="{% url 'tasks' %}">Задания ЕГЭ</a>
+                <a href="{% url 'themes' %}">Теория</a>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+<div class="container">
+{% block content %}
+
+{% endblock %}
+</div>
+
+{% block footer %}
+    <footer>
+    <div class="footer__main">
+        <div class="footer__block">
+            <span>Разделы сайта</span>
+            <a href="{% url 'options' %}">Варианты ЕГЭ</a>
+            <a href="{% url 'tasks' %}">Задания ЕГЭ</a>
+            <a href="{% url 'themes' %}">Теория</a>
+        </div>
+        <div class="footer__block">
+            <a id = "footer__description__header" href = "{% url 'home' %}">gauss.net</a>
+        </div>
+        <div class="footer__block">
+            <span>Связь со мной</span>
+            <div class="footer__social">
+            <a href="#"><img src="{% static 'tasks/images/gmail.png '%}" alt="почта"></a>
+            <a href="#"><img src="{% static 'tasks/images/telegram.png '%}" alt="телеграм"></a>
+            <a href="#"><img src="{% static 'tasks/images/twitter.png '%}" alt="твиттер"></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer__submain">
+        © 2022 <a href="{% url 'home' %}">gauss.net</a><br>
+        Частичное или полное копирование решений с данного сайта для распространения на других ресурсах,
+        в том числе и бумажных, строго запрещено.<br>
+        Все решения являются собственностью сайта.
+    </div>
+    </footer>
+{% endblock %}
+
+</body>
+</html>
