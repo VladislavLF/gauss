@@ -1,4 +1,4 @@
-Математический образовательный блог для подготовки к ЕГЭ по профильной математике
+A mathematical educational blog for preparing for the Unified State Exam in advanced mathematics.
 
 ![image](https://github.com/user-attachments/assets/440dd6c8-f3ce-476e-8e9d-ecb1636604cf)
 ![image](https://github.com/user-attachments/assets/51f3db6e-d84c-4fc6-b6f0-6c253961e0b7)
